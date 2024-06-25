@@ -1,0 +1,26 @@
+Cose da fare:
+- Analisi Specifica:
+    - dati in input dall'utente: fonte_rinnovabile e categoria
+    - raccolta dati:
+        - costruisci Classe Energia: con i vari attributi e le funzioni necessarie (str, hash ed eq)
+        - implementa la funzione per raccogliere i dati:
+            - def getEnergy_specificAttribute(fonte_rinnovabile, categori):
+                return list: result
+    - implementa funzione analisi specifica: calcolati i valori di minimo, massimo e medio per la relativa categoria
+    - aggiorna UI
+
+- Analisi Generale:
+    - dati in input dall'utente: fonte_rinnovabile
+    - raccolta dati:
+        - implementa la funzione per raccogliere i dati:
+            - def getEnergy_general(fonte_rinnovabile):
+                    return list: result
+    - implementa funzione analisi generale: calcolati i valori di minimo, massimo e medio per la relativa categoria
+    - aggiorna UI
+
+- Soluzione per il cliente:
+    - dati in input dall'utente: fonte_rinnovabile e categorie
+    - implementa funzione ricorsiva per la ricerca di soluzioni accettabili:
+    - aggiorna UI
+
+
