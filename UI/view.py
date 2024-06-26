@@ -13,9 +13,16 @@ class View(ft.UserControl):
         self._controller = None
         # graphical elements
         self._title = None
+        self._analisi = None
         self._ddFonteRinnovabile = None
         self._ddAttributes = None
-
+        self._btnAnalisi = None
+        self._txt_resultAnalisi = None
+        self._soluzione = None
+        self._txtImporto = None
+        self._txtCapacita = None
+        self._btnSoluzione = None
+        self._txt_resultSoluzione = None
 
 
     def load_interface(self):
@@ -24,15 +31,42 @@ class View(ft.UserControl):
                               color="blue", size=24, text_align=ft.TextAlign.CENTER)
         self._page.controls.append(self._title)
 
-        # row 1: scelta fonte rinnovabile e categorie da analizzare
-        self._ddFonteRinnovabile = ft.Dropdown(label="Renewable energy system", width=250, options=[])
-        self._ddAttributes = ft.Dropdown(label="Options", width=250, options=[])
-        self._btnAnalisi = ft.ElevatedButton(text="Analisi", width=200, on_click=self._controller.get_Analisi)
+        self._ddFonteRinnovabile = ft.Dropdown(label="Sistema energetico rinnovabile", width=300)
         self.controller.populated_ddFonteRinnovabile()
+        row = ft.Row([self._ddFonteRinnovabile], alignment=ft.MainAxisAlignment.CENTER)
+        self._page.controls.append(row)
+
+        # row 1: scelta fonte rinnovabile e categorie da analizzare
+
+        self._analisi = ft.Text("Analisi Preliminare", color="green", size=20)
+        self._ddAttributes = ft.Dropdown(label="Opzioni", width=450)
+        self._btnAnalisi = ft.ElevatedButton(text="Analisi", width=100, on_click=self._controller.get_Analisi)
         self.controller.populated_ddAttributes()
 
-        row1 = ft.Row([self._ddFonteRinnovabile, self._ddAttributes, self._btnAnalisi], alignment=ft.MainAxisAlignment.CENTER)
+        row1 = ft.Row([self._analisi, self._ddAttributes, self._btnAnalisi], alignment=ft.MainAxisAlignment.CENTER)
         self._page.controls.append(row1)
+
+        # row 2 : risultati analisi
+        self._txt_resultAnalisi = ft.ListView(expand=1, spacing=10, padding=20, auto_scroll=True, height=250)
+        row2 = ft.Row([self._txt_resultAnalisi], alignment=ft.MainAxisAlignment.CENTER)
+        self._page.controls.append(row2)
+
+        # row 3 : soluzione per il cliente
+        self._soluzione = ft.Text("Soluzione per il cliente", color="green", size=20)
+        self._txtImporto = ft.TextField(label="Investimento iniziale (in $)", width=200, disabled=True)
+        self._txtCapacita = ft.TextField(label="Capacità minima (in MW)", width=200, disabled=True)
+        self._btnSoluzione = ft.ElevatedButton(text="Trova", width=100, disabled=True, on_click=self._controller.get_SoluzioneCliente)
+
+        row3 = ft.Row([self._soluzione, self._txtImporto, self._txtCapacita, self._btnSoluzione], alignment=ft.MainAxisAlignment.CENTER)
+        self._page.controls.append(row3)
+
+        # row 4 : risultati soluzione per il cliente
+        self._txt_resultSoluzione = ft.ListView(expand=1, spacing=10, padding=20, auto_scroll=True)
+        row4 = ft.Row([self._txt_resultSoluzione], alignment=ft.MainAxisAlignment.CENTER)
+        self._page.controls.append(row4)
+
+
+
 
         self._page.update()
 
