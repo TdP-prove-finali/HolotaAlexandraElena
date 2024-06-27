@@ -37,10 +37,17 @@ class Model:
                 "Indice di Riduzione dell'Inquinamento Atmosferico": self._analisiAVG["Air_Pollution_Reduction_Index"]}
         return media
 
-    def analisiSpecifica(self, fonte, categoria):
+    def analisiSpecificaMax(self, fonte, categoria):
         self._analisiMax = DAO.getMaxValueForType(fonte)
+        return self._analisiMax[categoria]
+
+    def analisiSpecificaMin(self, fonte, categoria):
         self._analisiMin = DAO.getMinValueForType(fonte)
+        return self._analisiMin[categoria]
+
+    def analisiSpecificaAVG(self, fonte, categoria):
         self._analisiAVG = DAO.getAVGValueForType(fonte)
+        return self._analisiAVG[categoria]
 
     def getAllRenewableSource(self):
         return DAO.getAllRenewableSource()
