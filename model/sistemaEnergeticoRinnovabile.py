@@ -7,7 +7,7 @@ class SistemaEnergeticoRinnovabile:
     Energy_Production_MWh: float
     Energy_Consumption_MWh: float
     Energy_Storage_Capacity_MWh: float
-    Energy_Efficiency_Percentage: float
+    Storage_Efficiency_Percentage: float
     Grid_Integration_Level : int
     Initial_Investment_USD: float
     Funding_Sources: int

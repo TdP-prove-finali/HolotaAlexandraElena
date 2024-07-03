@@ -1,11 +1,84 @@
-from database.DAO import DAO
+from itertools import combinations
 
+from database.DAO import DAO
+import networkx as nx
 
 class Model:
     def __init__(self):
         self._analisiMax = None
         self._analisiMin = None
         self._analisiAVG = None
+
+        self._grafo = nx.Graph()
+        self._idMapNodi = {}
+        self._idMap = {}
+
+        self.bestNodes = []
+        self.bestScore = float('inf')
+
+    def getBestNodes(self):
+        self.bestNodes = []
+        self.bestScore = float('inf')
+
+        for node in self._idMapNodi.keys():
+            parziale = [node]
+            visited = set(parziale)
+            self.ricorsione(parziale, visited)
+
+        if len(self._idMapNodi.keys()) <= 3:
+            self.bestNodes = self._idMapNodi.keys()
+            self.bestScore = sum(self._idMapNodi[nodo] for nodo in self._idMapNodi.keys())
+
+
+    def ricorsione(self, parziale, visitati):
+        # Se abbiamo già tre nodi, confrontiamo il loro punteggio totale con il bestScore
+        if len(parziale) == 3:
+            peso = sum(self._idMapNodi[nodo] for nodo in parziale)
+            if peso < self.bestScore:
+                self.bestScore = peso
+                self.bestNodes = parziale[:]
+            return
+
+        ultimo = parziale[-1]
+        vicini = self.viciniAmmessi(ultimo, visitati)
+
+        # Ricorsione sui vicini
+        for v in vicini:
+            visitati.add(v)
+            parziale.append(v)
+
+            self.ricorsione(parziale, visitati)
+
+            parziale.pop()
+            visitati.remove(v)
+
+    def viciniAmmessi(self, ultimo, visitati):
+        vicini = self._grafo.neighbors(ultimo)
+        risultati = []
+
+        for v in vicini:
+            if v not in visitati and self._idMapNodi[v] <= self._idMapNodi[ultimo]:
+                risultati.append(v)
+
+        return risultati
+
+
+    def buildGrafo(self, fonte, prezzo, capacita):
+        self._grafo.clear()
+
+        #aggiungi nodi
+        self.nodes = DAO.getNodes(fonte, prezzo, capacita)
+        self._idMap = {x.id: x for x in self.nodes}
+        self._idMapNodi = {x.id: (x.Initial_Investment_USD/x.Installed_Capacity_MW) for x in self.nodes}
+        self._grafo.add_nodes_from(self._idMapNodi.keys())
+
+        #aggiungi archi
+        self.edges = combinations(self._idMapNodi.keys(), 2)
+
+        self._grafo.add_edges_from(self.edges)
+
+    def getGraphDetails(self):
+        return len(self._grafo.nodes), len(self._grafo.edges)
 
     def analisiGeneraleMax(self, fonte):
         self._analisiMax = DAO.getMaxValueForType(fonte)

@@ -6,7 +6,7 @@ class View(ft.UserControl):
         super().__init__()
         # page stuff
         self._page = page
-        self._page.title = "Template application using MVC and DAO"
+        self._page.title = "Software Alexandra Elena Holota"
         self._page.horizontal_alignment = 'CENTER'
         self._page.theme_mode = ft.ThemeMode.LIGHT
         # controller (it is not initialized. Must be initialized in the main, after the controller is created)
@@ -47,7 +47,7 @@ class View(ft.UserControl):
         self._page.controls.append(row1)
 
         # row 2 : risultati analisi
-        self._txt_resultAnalisi = ft.ListView(expand=1, spacing=10, padding=20, auto_scroll=True, height=250)
+        self._txt_resultAnalisi = ft.ListView(expand=1, spacing=10, padding=20, auto_scroll=True, height=200)
         row2 = ft.Row([self._txt_resultAnalisi], alignment=ft.MainAxisAlignment.CENTER)
         self._page.controls.append(row2)
 

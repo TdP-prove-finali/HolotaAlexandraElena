@@ -94,4 +94,25 @@ class DAO():
             print("Errore nella connessione")
             return None
 
+    @staticmethod
+    def getNodes(fonte, prezzo, capacita):
+        cnx = DBConnect.get_connection()
+        if cnx is not None:
+
+            result = []
+
+            cursor = cnx.cursor(dictionary=True)
+            query = '''  SELECT *
+                        FROM RenewableEnergySystems res 
+                        WHERE res.Type_of_Renewable_Energy = %s and res.Initial_Investment_USD <= %s and res.Installed_Capacity_MW >= %s'''
+            cursor.execute(query, (fonte,prezzo, capacita))
+            for row in cursor:
+                result.append(SistemaEnergeticoRinnovabile(**row))
+            cursor.close()
+            cnx.close()
+            return result
+        else:
+            print("Errore nella connessione")
+            return None
+
 
