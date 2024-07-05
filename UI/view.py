@@ -65,9 +65,6 @@ class View(ft.UserControl):
         row4 = ft.Row([self._txt_resultSoluzione], alignment=ft.MainAxisAlignment.CENTER)
         self._page.controls.append(row4)
 
-
-
-
         self._page.update()
 
     @property

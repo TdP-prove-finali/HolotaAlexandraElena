@@ -53,7 +53,9 @@ class Controller:
             self._view._txt_resultSoluzione.controls.append(ft.Text(f"Abbiamo trovato {len(self._model.bestNodes)} soluzioni ottime: "))
             for n in self._model.bestNodes:
                 self._view._txt_resultSoluzione.controls.append(ft.Text(
-                    f"{self._model._idMap[n].id} - Investimento inziale (USD): {self._model._idMap[n].Initial_Investment_USD} e Capacità installata (MW) : {self._model._idMap[n].Installed_Capacity_MW}"))
+                    f"{self._model._idMap[n].id} : Investimento inziale (USD): {self._model._idMap[n].Initial_Investment_USD} - "
+                    f"Capacità installata (MW) : {self._model._idMap[n].Installed_Capacity_MW} - "
+                    f"Indice di riduzione dell’inquinamento atmosferico: {self._model._idMap[n].Air_Pollution_Reduction_Index}  "))
         else:
             self._view._txt_resultSoluzione.controls.append(ft.Text(f"Non abbiamo trovato nessuna soluzione "))
 
@@ -81,7 +83,7 @@ class Controller:
                 minimo = self._model.analisiSpecificaMin(self._fonteRinnovabile, self._analisi)
                 massimo = self._model.analisiSpecificaMax(self._fonteRinnovabile, self._analisi)
                 media = self._model.analisiSpecificaAVG(self._fonteRinnovabile, self._analisi)
-                self._view._txt_resultAnalisi.controls.append(ft.Text(f"Analisi specifica per la categoria {self._analisiValore}: "))
+                self._view._txt_resultAnalisi.controls.append(ft.Text(f"Analisi specifica per la categoria {self._view._ddAttributes.value}: "))
                 self._view._txt_resultAnalisi.controls.append(ft.Text(f"Il valore minimo trovato è: {minimo}"))
                 self._view._txt_resultAnalisi.controls.append(ft.Text(f"Il valore massimo trovato è: {massimo}"))
                 self._view._txt_resultAnalisi.controls.append(ft.Text(f"Il valore medio calcoltao è: {media} "))
@@ -94,7 +96,6 @@ class Controller:
             self._view._txt_resultAnalisi.controls.append(ft.Text(f"Non è stata scelto un sistema energetico rinnovabile da analizzare"))
             self._view.update_page()
             return
-
 
 
     def populated_ddFonteRinnovabile(self):
@@ -111,17 +112,16 @@ class Controller:
         opzioni = self._model.getAllOptions()
         for o in opzioni:
             self._view._ddAttributes.options.append(ft.dropdown.Option(
-                data=o.attributes,on_click=self.readDDAnalisi, text=o.attributi
+                data=o.attributes, text=o.attributi, on_click=self.readDDAnalisi
             ))
         self._view.update_page()
 
     def readDDAnalisi(self, e):
         if e.control.data is None:
             self._analisi = None
-            self._analisiValore = None
         else:
             self._analisi = e.control.data
-            self._analisiValore = self._view._ddAttributes.value
+
 
     def readDDFonteRinnovabile(self, e):
         if e.control.data is None:
