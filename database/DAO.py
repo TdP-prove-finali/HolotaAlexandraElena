@@ -1,6 +1,6 @@
 from database.DB_connect import DBConnect
 from model.fonteRinnovabile import FonteRinnovabile
-from model.options import Option
+from model.option import Option
 from model.sistemaEnergeticoRinnovabile import SistemaEnergeticoRinnovabile
 
 
