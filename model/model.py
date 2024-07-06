@@ -26,21 +26,21 @@ class Model:
             self.ricorsione(parziale, visited)
 
         if len(self._idMapNodi.keys()) <= 3:
-            self.bestNodes = self._idMapNodi.keys()
+            self.bestNodes = list(self._idMapNodi.keys())
             self.bestScore = sum(self._idMapNodi[nodo] for nodo in self._idMapNodi.keys())
 
 
     def ricorsione(self, parziale, visitati):
+        ultimo = parziale[-1]
+        vicini = self.viciniAmmessi(ultimo, visitati)
+
         # Se abbiamo già tre nodi, confrontiamo il loro punteggio totale con il bestScore
-        if len(parziale) == 3:
+        if len(parziale) == 3 :
             peso = sum(self._idMapNodi[nodo] for nodo in parziale)
             if peso < self.bestScore:
                 self.bestScore = peso
                 self.bestNodes = parziale[:]
             return
-
-        ultimo = parziale[-1]
-        vicini = self.viciniAmmessi(ultimo, visitati)
 
         # Ricorsione sui vicini
         for v in vicini:
@@ -53,9 +53,11 @@ class Model:
             visitati.remove(v)
 
     def viciniAmmessi(self, ultimo, visitati):
+        if ultimo not in self._grafo:
+            return []
+
         vicini = self._grafo.neighbors(ultimo)
         risultati = []
-
         for v in vicini:
             if v not in visitati and self._idMapNodi[v] <= self._idMapNodi[ultimo]:
                 risultati.append(v)
