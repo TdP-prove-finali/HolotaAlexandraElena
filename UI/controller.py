@@ -127,8 +127,8 @@ class Controller:
         for o in opzioni:
             self._view._ddAttributes.options.append(
                 ft.dropdown.Option(
-                    data=o.attributes,
-                    text=o.attributi,
+                    data=o.attribute,
+                    text=o.attributo,
                     on_click=self.readDDAnalisi
             ))
         self._view.update_page()

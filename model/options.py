@@ -1,14 +1,14 @@
 from dataclasses import dataclass
 @dataclass
-class Options:
-    attributes: str
-    attributi: str
+class Option:
+    attribute: str
+    attributo: str
 
     def __str__(self):
-        return f"{self.attributes} - {self.attributi}"
+        return f"{self.attribute} - {self.attributo}"
 
     def __eq__(self, other):
-        return self.attributes == other.attributes and self.attributi == other.attributo
+        return self.attribute == other.attributes and self.attribute == other.attributo
 
     def __hash__(self):
-        return hash(self.attributes)
+        return hash(self.attribute)
